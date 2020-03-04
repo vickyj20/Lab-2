@@ -98,7 +98,7 @@ var map = new mapboxgl.Map({
 });
       map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: ['Community-Gardens'] // replace this with the name of the layer
+    layers: ['Income'] // replace this with the name of the layer
   });
 
   if (!features.length) {
