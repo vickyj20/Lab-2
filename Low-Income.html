@@ -106,11 +106,9 @@ var map = new mapboxgl.Map({
   }
 
   var feature = features[0];
-        console.log(features)
-
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.category + '</p>'+ feature.properties.meals)
+    .setHTML('<h3>' + feature.properties.Facility + '</h3><p>' + feature.properties.Category + '</p>'+ feature.properties.Meals)
     .addTo(map);
 });
 
