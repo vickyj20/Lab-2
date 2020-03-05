@@ -98,7 +98,7 @@ var map = new mapboxgl.Map({
 });
       map.on('load', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: ['Community-Gardens' & 'Schools'] // replace this with the name of the layer
+    layers: ['Homeless'] // replace this with the name of the layer
   });
 
   if (!features.length) {
@@ -110,7 +110,7 @@ var map = new mapboxgl.Map({
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.name + '</h3><p>' + feature.properties.merged_address + '</p>'+ feature.properties.food_tree_varieties)
+    .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.category + '</p>'+ feature.properties.meals)
     .addTo(map);
 });
 
