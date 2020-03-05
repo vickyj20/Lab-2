@@ -96,7 +96,7 @@ var map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/vickyj20/ck7coq1gk0f9v1ipn8s9ftldt' // replace this with your style URL
 });
-      map.on('load', function(e) {
+      map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     layers: ['Homeless'] // replace this with the name of the layer
   });
