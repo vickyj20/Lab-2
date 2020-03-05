@@ -98,7 +98,7 @@ var map = new mapboxgl.Map({
 });
       map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
-    layers: [['Community-Gardens', 'Schools']] // replace this with the name of the layer
+    layers: ['Community-Gardens'] // replace this with the name of the layer
   });
 
   if (!features.length) {
@@ -110,6 +110,21 @@ var map = new mapboxgl.Map({
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
     .setHTML('<h3>' + feature.properties.name + '</h3><p>' + feature.properties.merged_address + '</p>'+ feature.properties.food_tree_varieties)
+    .addTo(map);
+        map.on('click', function(e) {
+  var features = map.queryRenderedFeatures(e.point, {
+    layers: ['Schools'] // replace this with the name of the layer
+  });
+
+  if (!features.length) {
+    return;
+  }
+
+  var feature = features[0];
+
+  var popup = new mapboxgl.Popup({ offset: [0, -15] })
+    .setLngLat(feature.geometry.coordinates)
+    .setHTML('<h3>' + feature.properties.name + '</h3><p>' + feature.properties.school_name + '</p>'+ feature.properties.address)
     .addTo(map);
 });
 
