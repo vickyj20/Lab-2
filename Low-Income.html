@@ -87,11 +87,447 @@ h3 {
   margin-right: 5px;
 }
 </style>
-
-
+</head>
 <body>
+<style>
+    .filter-ctrl {
+        position: absolute;
+        top: 10px;
+        right: 10px;
+        z-index: 1;
+    }
+
+    .filter-ctrl input[type='text'] {
+        font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        width: 100%;
+        border: 0;
+        background-color: #fff;
+        margin: 0;
+        color: rgba(0, 0, 0, 0.5);
+        padding: 10px;
+        box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+        border-radius: 3px;
+        width: 180px;
+    }
+</style>
+<div id="map"></div>
+<div class="filter-ctrl">
+    <input
+        id="filter-input"
+        type="text"
+        name="filter"
+        placeholder="Filter by Meals"
+    />
+</div>
 <script>
 mapboxgl.accessToken = 'pk.eyJ1Ijoidmlja3lqMjAiLCJhIjoiY2s2cmU2a2Z6MDU3OTNkbGExcTBhanlsNCJ9.AnDT5Fbe1lZxtUukEMhabA';
+var places = {
+  {
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.09934686157887,
+          49.27157435253819
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Aboriginal Shelter",
+        "carts": "yes",
+        "phone": "604-347-0299",
+        "pets": "yes",
+        "meals": "yes",
+        "geo_local_area": "Strathcona"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.07055190144827,
+          49.269335660054985
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Vineyard Church",
+        "carts": "no",
+        "phone": "604-255-4463",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Grandview-Woodland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10522539875642,
+          49.282873810910445
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "New Fountain",
+        "carts": "yes",
+        "phone": "604-331-1246",
+        "pets": "yes",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10142942630725,
+          49.2821349503207
+        ]
+      },
+      "properties": {
+        "category": "Men",
+        "facility": "The Haven",
+        "carts": "no",
+        "phone": "604-646-6800",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.09098604679792,
+          49.281871703205425
+        ]
+      },
+      "properties": {
+        "category": "Men",
+        "facility": "Union Gospel Mission",
+        "carts": "no",
+        "phone": "604-253-3323",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Strathcona"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.08914065335308,
+          49.28325701333048
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Triage",
+        "carts": "no",
+        "phone": "604-254-3700",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Strathcona"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.1149134172579,
+          49.277765005478706
+        ]
+      },
+      "properties": {
+        "category": "Men",
+        "facility": "Catholic Charities Men's Hostel",
+        "carts": "no",
+        "phone": "604-443-3292",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.12632252991092,
+          49.27540422137574
+        ]
+      },
+      "properties": {
+        "category": "Youth (all genders)",
+        "facility": "Covenant House",
+        "carts": "no",
+        "phone": "604-685-7474",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10132492363452,
+          49.2821327932096
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Anchor of Hope",
+        "carts": "no",
+        "phone": "604-646-6899",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10122042281183,
+          49.28213153552006
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Anchor of Hope",
+        "carts": "no",
+        "phone": "604-646-6899",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10091316193402,
+          49.28203975362022
+        ]
+      },
+      "properties": {
+        "category": "Men",
+        "facility": "The Beacon",
+        "carts": "no",
+        "phone": "604-646-6846",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10767247883172,
+          49.28180507947213
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Crosswalk",
+        "carts": "no",
+        "phone": "604-669-4349",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.12645824751823,
+          49.281851154764425
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "First Baptist Church",
+        "carts": "no",
+        "phone": "604-683-8441",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "West End"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.11293968534518,
+          49.28245838143064
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Belkin House",
+        "carts": "no",
+        "phone": "604-681-3405",
+        "pets": "no",
+        "meals": "no",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.06735635798717,
+          49.26974745114546
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Grandview Calvary Baptist Church",
+        "carts": "no",
+        "phone": "604-255-1411",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Grandview-Woodland"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.09620765787055,
+          49.28374408771319
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Lookout Downtown",
+        "carts": "no",
+        "phone": "604-681-9126",
+        "pets": "yes",
+        "meals": "no",
+        "geo_local_area": "Strathcona"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.11236726193974,
+          49.26689088504469
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Yukon Shelter",
+        "carts": "no",
+        "phone": "604-264-1680",
+        "pets": "yes",
+        "meals": "no",
+        "geo_local_area": "Mount Pleasant"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.12779292707766,
+          49.279567168411575
+        ]
+      },
+      "properties": {
+        "category": "Youth (all genders)",
+        "facility": "Dusk to Dawn-Directions Youth Centre",
+        "carts": "no",
+        "phone": "604-633-1472",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10111505794855,
+          49.282043924794294
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Anchor of Hope",
+        "carts": "no",
+        "phone": "604-646-6899",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Downtown"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.09706533477157,
+          49.28096653703935
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "First United Church",
+        "carts": "yes",
+        "phone": "604-681-8365",
+        "pets": "yes",
+        "meals": "yes",
+        "geo_local_area": "Strathcona"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [
+          -123.10586046207774,
+          49.262338305195684
+        ]
+      },
+      "properties": {
+        "category": "Adults (all genders)",
+        "facility": "Tenth Avenue Church",
+        "carts": "no",
+        "phone": "604-876-2181",
+        "pets": "no",
+        "meals": "yes",
+        "geo_local_area": "Mount Pleasant"
+      }
+    }
+  ]
+};
+  var layerIDs = []; // Will contain a list used to filter against.
+  var filterInput = document.getElementById('filter-input');
 var map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/vickyj20/ck7coq1gk0f9v1ipn8s9ftldt' // replace this with your style URL
@@ -112,6 +548,13 @@ var map = new mapboxgl.Map({
     .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.category + '</p>'+ feature.properties.meals)
     .addTo(map);
 });
+  map.on('load', function() {
+        // Add a GeoJSON source containing place coordinates and information.
+        map.addSource('places', {
+            'type': 'geojson',
+            'data': places
+        });
+  
 
 map.on('load', function() {
 var layers = ['0-2300', '2301-3605', '3606-4585', '4586-5095', '5096-6600', '6601-8485', '8486-10000+'];
@@ -131,6 +574,19 @@ for (i = 0; i < layers.length; i++) {
   legend.appendChild(item);
 }
 });
+    filterInput.addEventListener('keyup', function(e) {
+            // If the input value matches a layerID set
+            // it's visibility to 'visible' or else hide it.
+            var value = e.target.value.trim().toLowerCase();
+            layerIDs.forEach(function(layerID) {
+                map.setLayoutProperty(
+                    layerID,
+                    'visibility',
+                    layerID.indexOf(value) > -1 ? 'visible' : 'none'
+                );
+            });
+        });
+    });
 
 </script>
 </body>
