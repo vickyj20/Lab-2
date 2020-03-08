@@ -96,6 +96,15 @@ var map = new mapboxgl.Map({
   container: 'map', // container id
   style: 'mapbox://styles/vickyj20/ck7coq1gk0f9v1ipn8s9ftldt' // replace this with your style URL
 });
+  
+  map.addControl(
+    new mapboxgl.GeolocateControl({
+      positionOptions: {
+        enableHighAccuracy: true
+      },
+      trackUserLocation: true
+    })
+  );
       map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     layers: ['Homeless'] // replace this with the name of the layer
@@ -112,13 +121,6 @@ var map = new mapboxgl.Map({
     .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.geo_local_area)
     .addTo(map);
 });
-  
-map.addControl(
-new mapboxgl.GeolocateControl({positionOptions: {
-  enableHighAccuracy: true},
-  trackUserLocation: true
-  })
-);
 
 map.on('load', function() {
 var layers = ['0-2300', '2301-3605', '3606-4585', '4586-5095', '5096-6600', '6601-8485', '8486-10000+'];
