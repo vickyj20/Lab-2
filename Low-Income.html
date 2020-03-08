@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-<script src='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js'></script>
-
-<link href='https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css' rel='stylesheet' />
-<link href='styles.css' rel='stylesheet' />
+<meta charset="utf-8" />
+<title>Homeless Shelters In Vancouver</title>
+<meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+<script src="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.js"></script>
+<link href="https://api.mapbox.com/mapbox-gl-js/v1.8.1/mapbox-gl.css" rel="stylesheet" />
 
 
 <div id='map'></div>
@@ -21,11 +22,11 @@ body {
 h2,
 h3 {
   margin: 10px;
-  font-size: 1.5em;
+  font-size: 1em;
 }
 
 h3 {
-  font-size: 1em;
+  font-size: 0.9em;
 }
  
  p {
@@ -105,6 +106,7 @@ var map = new mapboxgl.Map({
       trackUserLocation: true
     })
   );
+  
       map.on('click', function(e) {
   var features = map.queryRenderedFeatures(e.point, {
     layers: ['Homeless'] // replace this with the name of the layer
