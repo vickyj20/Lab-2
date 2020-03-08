@@ -21,11 +21,11 @@ body {
 h2,
 h3 {
   margin: 10px;
-  font-size: 1em;
+  font-size: 2em;
 }
 
 h3 {
-  font-size: 0.85em;
+  font-size: 1em;
 }
  
  p {
@@ -109,7 +109,7 @@ var map = new mapboxgl.Map({
 
   var popup = new mapboxgl.Popup({ offset: [0, -15] })
     .setLngLat(feature.geometry.coordinates)
-    .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.category + '</p>'+ feature.properties.meals)
+    .setHTML('<h3>' + feature.properties.facility + '</h3><p>' + feature.properties.geo_local_area)
     .addTo(map);
 });
   
